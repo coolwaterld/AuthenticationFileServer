@@ -1,0 +1,201 @@
+{
+  "usecase": {
+    "id": "dea6c787-bcf3-4647-b55b-419d8fde2462",
+    "name": "BU_plug_analyze use case",
+    "domain": "Condition Monitoring & Process Control",
+    "system_components": [
+      {
+        "id": "f36d80d8-727e-44d6-b639-071867c77641",
+        "name": "plc001",
+        "short_description": "Siemens PLC",
+        "component_type": {
+          "category": "hardware",
+          "hardware": "Siemens PLC"
+        },
+        "features": {
+          "protocols": [
+            "SIMATIC S7",
+            "Profinet/IO"
+          ],
+          "data_types": [
+            "time-series"
+          ],
+          "performance": [
+            {
+              "type": "cycle_time",
+              "value": 100,
+              "unit": "ms"
+            },
+            {
+              "type": "throughput",
+              "value": 1000,
+              "unit": "tags/s"
+            },
+            {
+              "type": "latency",
+              "value": 100,
+              "unit": "ms"
+            }
+          ]
+        }
+      },
+      {
+        "id": "63293663-a354-4414-a41b-fa46f06f32f6",
+        "name": "plc002",
+        "short_description": "Rockwell PLC",
+        "component_type": {
+          "category": "hardware",
+          "hardware": "Rockwell PLC"
+        },
+        "features": {
+          "protocols": [
+            "OPC-UA"
+          ],
+          "data_types": [
+            "time-series"
+          ]
+        }
+      },
+      {
+        "id": "b98d0c95-7e0c-49a2-91fc-255aa69ce1d7",
+        "name": "sensor001",
+        "short_description": "data source where we read data from",
+        "component_type": {
+          "category": "hardware",
+          "hardware": "Temperature Meter"
+        },
+        "features": {
+          "protocols": [
+            "MQTT"
+          ],
+          "data_types": [
+            "time-series"
+          ]
+        }
+      },
+      {
+        "id": "28f05eea-5b9b-4932-96f0-efa230dce628",
+        "name": "database001",
+        "short_description": "database where we store data",
+        "component_type": {
+          "category": "software",
+          "software": "PostgreSQL"
+        },
+        "features": {
+          "data_types": [
+            "time-series"
+          ],
+          "performance": [
+            {
+              "type": "throughput",
+              "value": 100000,
+              "unit": "tags/s"
+            },
+            {
+              "type": "latency",
+              "value": 100,
+              "unit": "ms"
+            }
+          ]
+        }
+      },
+      {
+        "id": "10dc6ea6-0f33-486b-8636-2bd8b40299f3",
+        "name": "visualization001",
+        "short_description": "BI for visualization",
+        "component_type": {
+          "category": "software",
+          "software": "Business Intelligent"
+        },
+        "features": {
+          "visualization_charts": [
+            "line"
+          ]
+        }
+      }
+    ],
+    "task_sequence": [
+      {
+        "id": "6a13d1a9-5718-49cf-b8e8-a272628bff4b",
+        "name": "task001",
+        "task_type": {
+          "category": "Input",
+          "Input": "Read datapoint from PLC"
+        },
+        "features": {
+          "source": [
+            "f36d80d8-727e-44d6-b639-071867c77641"
+          ]
+        }
+      },
+      {
+        "id": "47f2a51e-d33c-489e-8563-12c8b9064dae",
+        "name": "task002",
+        "task_type": {
+          "category": "Input",
+          "Input": "Read data from sensor"
+        },
+        "features": {
+          "source": [
+            "b98d0c95-7e0c-49a2-91fc-255aa69ce1d7"
+          ]
+        }
+      },
+      {
+        "id": "530a5f06-a50a-42b8-96ff-8187c3392fcb",
+        "name": "task003",
+        "task_type": {
+          "category": "Output",
+          "Output": "Store data into database"
+        },
+        "origin": [
+          "6a13d1a9-5718-49cf-b8e8-a272628bff4b",
+          "47f2a51e-d33c-489e-8563-12c8b9064dae"
+        ],
+        "features": {
+          "target": [
+            "28f05eea-5b9b-4932-96f0-efa230dce628"
+          ]
+        }
+      },
+      {
+        "id": "ad75fd43-f82b-4dea-ad0b-c107cce2f21e",
+        "name": "task004",
+        "task_type": {
+          "category": "Process",
+          "Process": "Relabel data and forward"
+        },
+        "origin": [
+          "530a5f06-a50a-42b8-96ff-8187c3392fcb"
+        ]
+      },
+      {
+        "id": "b62cb0e1-f758-4dea-9535-8fc00801b5f0",
+        "name": "task005",
+        "task_type": {
+          "category": "Process",
+          "Process": "Cause Identification"
+        },
+        "origin": [
+          "ad75fd43-f82b-4dea-ad0b-c107cce2f21e"
+        ]
+      },
+      {
+        "id": "1072545f-ffa6-4ed0-9518-2d9e13b5b93a",
+        "name": "task006",
+        "task_type": {
+          "category": "Process",
+          "Process": "Visualize data trend"
+        },
+        "origin": [
+          "b62cb0e1-f758-4dea-9535-8fc00801b5f0"
+        ],
+        "features": {
+          "target": [
+            "10dc6ea6-0f33-486b-8636-2bd8b40299f3"
+          ]
+        }
+      }
+    ]
+  }
+}

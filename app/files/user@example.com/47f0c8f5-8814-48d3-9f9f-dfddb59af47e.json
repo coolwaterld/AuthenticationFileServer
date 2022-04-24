@@ -1,0 +1,309 @@
+{
+  "usecase": {
+    "id": "47f0c8f5-8814-48d3-9f9f-dfddb59af47e",
+    "name": "kimberly-clark use case",
+    "domain": "Defect Prediction",
+    "requirements": [
+      {
+        "type": "loop_time",
+        "value": 10,
+        "unit": "s"
+      },
+      {
+        "type": "cpu_load",
+        "value": 0.5,
+        "unit": "cores"
+      },
+      {
+        "type": "device_storage",
+        "value": 40,
+        "unit": "GB"
+      }
+    ],
+    "system_components": [
+      {
+        "id": "20812a4f-6292-42f3-a325-b0755c21af89",
+        "name": "plc01",
+        "short_description": "PLC for sensors reading",
+        "component_type": {
+          "category": "hardware"
+        },
+        "features": {
+          "protocols": [
+            "OPC-UA"
+          ],
+          "data_types": [
+            "control",
+            "time-series"
+          ]
+        }
+      },
+      {
+        "id": "b567e270-56ca-4dca-ab83-720e76ad4dcc",
+        "name": "plc02",
+        "short_description": "Rockwell PLC for motor control",
+        "component_type": {
+          "category": "hardware"
+        },
+        "features": {
+          "protocols": [
+            "OPC-UA"
+          ],
+          "data_types": [
+            "control",
+            "time-series"
+          ]
+        }
+      },
+      {
+        "id": "2b329b77-6bd8-4007-81c7-ba9b9a5a4b15",
+        "name": "sensor01",
+        "short_description": "Camera for defect detection",
+        "component_type": {
+          "category": "hardware"
+        },
+        "features": {
+          "protocols": [
+            "Other"
+          ],
+          "data_types": [
+            "image"
+          ]
+        }
+      },
+      {
+        "id": "b0675ddb-94e5-43c2-befd-05f867f1f6f4",
+        "name": "sensor02",
+        "short_description": "Air flow speed meter",
+        "component_type": {
+          "category": "hardware"
+        },
+        "features": {
+          "protocols": [
+            "Profinet/IO"
+          ],
+          "data_types": [
+            "time-series"
+          ]
+        }
+      },
+      {
+        "id": "c81c0359-b0a1-4bb7-a2bd-3b9d8c7c90ab",
+        "name": "sensor03",
+        "short_description": "Temperature measurement on interested spots",
+        "component_type": {
+          "category": "hardware"
+        },
+        "features": {
+          "protocols": [
+            "Ethernet/IP"
+          ],
+          "data_types": [
+            "time-series"
+          ]
+        }
+      },
+      {
+        "id": "dc91e659-2c57-4824-a407-1010c83acdf0",
+        "name": "sensor04",
+        "short_description": "Air flow pressure measurement",
+        "component_type": {
+          "category": "hardware"
+        },
+        "features": {
+          "protocols": [
+            "Ethernet/IP"
+          ],
+          "data_types": [
+            "time-series"
+          ]
+        }
+      },
+      {
+        "id": "22deb1e8-85a8-410c-b1b4-f882ea616b2d",
+        "name": "sensor05",
+        "short_description": "Extrusion force measurement",
+        "component_type": {
+          "category": "hardware"
+        },
+        "features": {
+          "protocols": [
+            "Ethernet/IP"
+          ],
+          "data_types": [
+            "time-series"
+          ]
+        }
+      },
+      {
+        "id": "fbfa0d05-d76e-4e86-a2e6-0c87adc18f7f",
+        "name": "sensor06",
+        "short_description": "Laser distance to measure object positioning",
+        "component_type": {
+          "category": "hardware"
+        },
+        "features": {
+          "protocols": [
+            "Ethernet/IP"
+          ],
+          "data_types": [
+            "time-series"
+          ]
+        }
+      },
+      {
+        "id": "b6f8222a-0a5c-4265-97bb-13a766e2042a",
+        "name": "cloud01",
+        "short_description": "PI server for data storage",
+        "component_type": {
+          "category": "cloud"
+        },
+        "features": {
+          "protocols": [
+            "HTTP"
+          ],
+          "data_types": [
+            "time-series"
+          ]
+        }
+      },
+      {
+        "id": "66f028f8-1c74-4fc6-85aa-97bfd1ff97b1",
+        "name": "storage01",
+        "short_description": "timeSeriesDB for storage",
+        "component_type": {
+          "category": "software"
+        },
+        "features": {
+          "protocols": [
+            "HTTP"
+          ],
+          "data_types": [
+            "time-series",
+            "image",
+            "video"
+          ]
+        }
+      },
+      {
+        "id": "0188b582-c48a-4994-ba1f-cef073a520ed",
+        "name": "analytics01",
+        "short_description": "ML ops to offline trained defect detection module",
+        "component_type": {
+          "category": "software"
+        },
+        "features": {
+          "protocols": [
+            "Historian"
+          ],
+          "data_types": [
+            "time-series",
+            "image"
+          ]
+        }
+      }
+    ],
+    "task_sequence": [
+      {
+        "id": "85677bf5-d403-40c3-9a7c-ebf0dd7798db",
+        "name": "task01",
+        "task_type": {
+          "category": "Input",
+          "Input": "Read datapoint from PLC"
+        },
+        "features": {
+          "source": [
+            "20812a4f-6292-42f3-a325-b0755c21af89",
+            "b567e270-56ca-4dca-ab83-720e76ad4dcc"
+          ]
+        }
+      },
+      {
+        "id": "d7a02a23-267f-4087-bc0d-d24416fd04a7",
+        "name": "task02",
+        "task_type": {
+          "category": "Input",
+          "Input": "Read image from camera"
+        },
+        "features": {
+          "source": [
+            "2b329b77-6bd8-4007-81c7-ba9b9a5a4b15"
+          ]
+        }
+      },
+      {
+        "id": "f193db48-d0b2-41ab-890e-fbc1ac6cf3a1",
+        "name": "task03",
+        "task_type": {
+          "category": "Process",
+          "Process": "Process time-series data"
+        },
+        "origin": [
+          "85677bf5-d403-40c3-9a7c-ebf0dd7798db"
+        ]
+      },
+      {
+        "id": "45a2c11c-1d52-49b6-b5d6-afa18ee94746",
+        "name": "task04",
+        "task_type": {
+          "category": "Process",
+          "Process": "Run the ML Model"
+        },
+        "origin": [
+          "f193db48-d0b2-41ab-890e-fbc1ac6cf3a1"
+        ]
+      },
+      {
+        "id": "807ea222-1fd9-436b-8922-bf597c6a65d3",
+        "name": "task05",
+        "task_type": {
+          "category": "Process",
+          "Process": "Run the ML Model"
+        },
+        "origin": [
+          "d7a02a23-267f-4087-bc0d-d24416fd04a7"
+        ]
+      },
+      {
+        "id": "08fb2a58-2a29-4421-8314-19d999909585",
+        "name": "task06",
+        "task_type": {
+          "category": "Output",
+          "Output": "Write data to storage"
+        },
+        "origin": [
+          "45a2c11c-1d52-49b6-b5d6-afa18ee94746"
+        ],
+        "features": {
+          "target": [
+            "66f028f8-1c74-4fc6-85aa-97bfd1ff97b1"
+          ]
+        }
+      },
+      {
+        "id": "8acb304b-2484-4885-b227-ebfa0a56d24d",
+        "name": "task07",
+        "task_type": {
+          "category": "Process",
+          "Process": "Visualize data sample"
+        },
+        "origin": [
+          "807ea222-1fd9-436b-8922-bf597c6a65d3",
+          "45a2c11c-1d52-49b6-b5d6-afa18ee94746"
+        ]
+      },
+      {
+        "id": "ea63491c-0252-4916-8b50-d997e123f88f",
+        "name": "task08",
+        "task_type": {
+          "category": "Process",
+          "Process": "Visualize data trend"
+        },
+        "origin": [
+          "d7a02a23-267f-4087-bc0d-d24416fd04a7",
+          "85677bf5-d403-40c3-9a7c-ebf0dd7798db"
+        ]
+      }
+    ]
+  }
+}

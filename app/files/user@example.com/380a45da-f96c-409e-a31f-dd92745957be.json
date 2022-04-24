@@ -1,0 +1,177 @@
+{
+  "usecase": {
+    "id": "380a45da-f96c-409e-a31f-dd92745957be",
+    "name": "BU_cloud_forwarding use case",
+    "domain": "Production Data Management",
+    "system_components": [
+      {
+        "id": "3c147d6c-ce6b-4440-a64d-5b2be0ddcde2",
+        "name": "plc001",
+        "short_description": "Siemens PLC",
+        "component_type": {
+          "category": "hardware",
+          "hardware": "Siemens PLC"
+        },
+        "features": {
+          "protocols": [
+            "SIMATIC S7",
+            "Profinet/IO"
+          ],
+          "data_types": [
+            "time-series"
+          ],
+          "performance": [
+            {
+              "type": "cycle_time",
+              "value": 100,
+              "unit": "ms"
+            },
+            {
+              "type": "throughput",
+              "value": 1000,
+              "unit": "tags/s"
+            },
+            {
+              "type": "latency",
+              "value": 100,
+              "unit": "ms"
+            }
+          ]
+        }
+      },
+      {
+        "id": "99637d30-3d29-4b7b-b51f-40d6056f4607",
+        "name": "plc002",
+        "short_description": "Mitsubishi PLC",
+        "component_type": {
+          "category": "hardware",
+          "hardware": "Mitsubishi PLC"
+        },
+        "features": {
+          "protocols": [
+            "OPC-UA"
+          ],
+          "data_types": [
+            "time-series"
+          ],
+          "performance": [
+            {
+              "type": "cycle_time",
+              "value": 100,
+              "unit": "ms"
+            },
+            {
+              "type": "throughput",
+              "value": 1000,
+              "unit": "tags/s"
+            },
+            {
+              "type": "latency",
+              "value": 100,
+              "unit": "ms"
+            }
+          ]
+        }
+      },
+      {
+        "id": "9f5d8352-960a-4d67-9da5-239221b3ce07",
+        "name": "database001",
+        "short_description": "InfluxDB",
+        "component_type": {
+          "category": "software",
+          "software": "InfluxDB"
+        },
+        "features": {
+          "data_types": [
+            "time-series"
+          ],
+          "performance": [
+            {
+              "type": "throughput",
+              "value": 100000,
+              "unit": "tags/s"
+            },
+            {
+              "type": "latency",
+              "value": 100,
+              "unit": "ms"
+            }
+          ]
+        }
+      },
+      {
+        "id": "edf624c7-9eda-4611-9f8e-ca8ad0cc7072",
+        "name": "cloud001",
+        "short_description": "MindSphere",
+        "component_type": {
+          "category": "cloud",
+          "cloud": "MindSphere"
+        },
+        "features": {
+          "protocols": [
+            "MQTT"
+          ]
+        }
+      }
+    ],
+    "task_sequence": [
+      {
+        "id": "c421ae0c-2635-48cc-9e01-ac51177440d5",
+        "name": "task001",
+        "task_type": {
+          "category": "Input",
+          "Input": "Read datapoint from PLC"
+        },
+        "features": {
+          "source": [
+            "3c147d6c-ce6b-4440-a64d-5b2be0ddcde2",
+            "99637d30-3d29-4b7b-b51f-40d6056f4607"
+          ]
+        }
+      },
+      {
+        "id": "9b0f2d48-2d85-476a-905c-0cfdf202eb5d",
+        "name": "task002",
+        "task_type": {
+          "category": "Output",
+          "Output": "Store data into database"
+        },
+        "origin": [
+          "c421ae0c-2635-48cc-9e01-ac51177440d5"
+        ],
+        "features": {
+          "target": [
+            "9f5d8352-960a-4d67-9da5-239221b3ce07"
+          ]
+        }
+      },
+      {
+        "id": "be89620c-2c9a-4c16-bc6e-065f26a692c2",
+        "name": "task003",
+        "task_type": {
+          "category": "Process",
+          "Process": "Filter valid data"
+        },
+        "origin": [
+          "9b0f2d48-2d85-476a-905c-0cfdf202eb5d"
+        ]
+      },
+      {
+        "id": "c42355cf-3066-4399-ab4b-e1038ea3ffa9",
+        "name": "task004",
+        "task_type": {
+          "category": "Output",
+          "Output": "Upload data to cloud"
+        },
+        "origin": [
+          "be89620c-2c9a-4c16-bc6e-065f26a692c2"
+        ],
+        "features": {
+          "target": [
+            "edf624c7-9eda-4611-9f8e-ca8ad0cc7072"
+          ]
+        }
+      }
+    ]
+  }
+}

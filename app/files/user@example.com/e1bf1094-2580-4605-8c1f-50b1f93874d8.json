@@ -1,0 +1,363 @@
+{
+  "usecase": {
+    "id": "e1bf1094-2580-4605-8c1f-50b1f93874d8",
+    "name": "Wintershine Fishfarm use case",
+    "domain": "Condition Monitoring & Process Control",
+    "requirements": [
+      {
+        "type": "loop_time",
+        "value": 10,
+        "unit": "s"
+      },
+      {
+        "type": "cpu_load",
+        "value": 0.5,
+        "unit": "cores"
+      },
+      {
+        "type": "device_storage",
+        "value": 30,
+        "unit": "GB"
+      }
+    ],
+    "system_components": [
+      {
+        "id": "0392afd3-2d6f-42ad-8c06-1a6652153bc8",
+        "name": "plc01",
+        "short_description": "S7 PLC 1500",
+        "component_type": {
+          "category": "hardware"
+        },
+        "features": {
+          "protocols": [
+            "SIMATIC S7",
+            "Profinet/IO"
+          ],
+          "data_types": [
+            "control",
+            "time-series"
+          ]
+        }
+      },
+      {
+        "id": "41b1d715-9312-414b-a456-e8544ad84b35",
+        "name": "ext_hw01",
+        "short_description": "NVIDIA JETSON to External Hardware for training and inferecing of ML",
+        "component_type": {
+          "category": "hardware"
+        },
+        "features": {
+          "protocols": [
+            "Ethernet/IP",
+            "CAN"
+          ],
+          "data_types": [
+            "control",
+            "time-series",
+            "image"
+          ]
+        }
+      },
+      {
+        "id": "4ce70667-090c-4356-8d7e-5fd91b1926eb",
+        "name": "sensor01",
+        "short_description": "Ultra-Depth mode for the ZED Mini to ensure accurate motion tracking of fish in the tank",
+        "component_type": {
+          "category": "hardware"
+        },
+        "features": {
+          "protocols": [
+            "RTSP"
+          ],
+          "data_types": [
+            "image",
+            "video"
+          ]
+        }
+      },
+      {
+        "id": "c5071b38-b250-45a5-896c-2d7711a6241d",
+        "name": "sensor02",
+        "short_description": "Energy Meter to measure energy usage in the fish tank",
+        "component_type": {
+          "category": "hardware"
+        },
+        "features": {
+          "protocols": [
+            "Ethernet/IP"
+          ],
+          "data_types": [
+            "time-series"
+          ]
+        }
+      },
+      {
+        "id": "59321e98-0cb6-44a9-819b-6d082e6c3ae1",
+        "name": "sensor03",
+        "short_description": "DO Meter",
+        "component_type": {
+          "category": "hardware"
+        },
+        "features": {
+          "protocols": [
+            "Ethernet/IP"
+          ],
+          "data_types": [
+            "time-series"
+          ]
+        }
+      },
+      {
+        "id": "529a17e3-7f31-4abb-8d57-17fd409a4944",
+        "name": "sensor04",
+        "short_description": "Flow Meter to measure the flow rate in the fish tank",
+        "component_type": {
+          "category": "hardware"
+        },
+        "features": {
+          "protocols": [
+            "Ethernet/IP"
+          ],
+          "data_types": [
+            "control",
+            "time-series"
+          ]
+        }
+      },
+      {
+        "id": "c4b3bf8f-eb4c-4dbb-b055-17877102e7a8",
+        "name": "sensor05",
+        "short_description": "Temperature Sensor to Measure the temperature",
+        "component_type": {
+          "category": "hardware"
+        },
+        "features": {
+          "protocols": [
+            "Ethernet/IP"
+          ],
+          "data_types": [
+            "control",
+            "time-series"
+          ]
+        }
+      },
+      {
+        "id": "a98f4ac8-ef2a-4b9c-91fe-d8546a6b5f7d",
+        "name": "actuator01",
+        "short_description": "Feeder To feed food to fish in tank",
+        "component_type": {
+          "category": "hardware"
+        },
+        "features": {
+          "protocols": [
+            "Ethernet/IP"
+          ],
+          "data_types": [
+            "control"
+          ]
+        }
+      },
+      {
+        "id": "0a39316c-a185-47c8-b104-ba189bdcabb0",
+        "name": "cloud01",
+        "short_description": "AWS Cloud for data storage",
+        "component_type": {
+          "category": "cloud"
+        },
+        "features": {
+          "protocols": [
+            "MQTT",
+            "HTTP"
+          ],
+          "data_types": [
+            "time-series",
+            "image",
+            "video"
+          ]
+        }
+      },
+      {
+        "id": "183b1fcf-0c22-4fc4-b531-f54ab47afcca",
+        "name": "storage01",
+        "short_description": "MongoDB database for storage",
+        "component_type": {
+          "category": "software"
+        },
+        "features": {
+          "protocols": [
+            "HTTP"
+          ],
+          "data_types": [
+            "time-series",
+            "image",
+            "video"
+          ]
+        }
+      },
+      {
+        "id": "724e4755-06c1-4d74-ba1f-867c55c4b785",
+        "name": "analytics01",
+        "short_description": "Object Detection To detect fish in the tank",
+        "component_type": {
+          "category": "software"
+        },
+        "features": {
+          "protocols": [
+            "MQTT",
+            "HTTP"
+          ],
+          "data_types": [
+            "image"
+          ]
+        }
+      },
+      {
+        "id": "497563c6-d305-4964-9837-2fcc04868d66",
+        "name": "analytics02",
+        "short_description": "Classification To classify the fish category based on size of the fish",
+        "component_type": {
+          "category": "software"
+        },
+        "features": {
+          "protocols": [
+            "MQTT",
+            "HTTP"
+          ],
+          "data_types": [
+            "image"
+          ]
+        }
+      },
+      {
+        "id": "b91864b7-de5d-480e-89fa-70ac5015a5a4",
+        "name": "analytics03",
+        "short_description": "Object Counting To count approximate number of fish in the tank",
+        "component_type": {
+          "category": "software"
+        },
+        "features": {
+          "protocols": [
+            "MQTT",
+            "HTTP"
+          ],
+          "data_types": [
+            "video"
+          ]
+        }
+      },
+      {
+        "id": "f64573e3-94c6-4014-887c-d2a14bc36505",
+        "name": "analytics04",
+        "short_description": "MLOPS to Performance off device labelling, training, deploymenet of ML model",
+        "component_type": {
+          "category": "software"
+        },
+        "features": {
+          "protocols": [
+            "MQTT",
+            "HTTP"
+          ],
+          "data_types": [
+            "control",
+            "image",
+            "video"
+          ]
+        }
+      }
+    ],
+    "task_sequence": [
+      {
+        "id": "769a8ebf-9b9b-4889-953a-eb7399eb8e32",
+        "name": "task01",
+        "task_type": {
+          "category": "Input",
+          "Input": "Read datapoint from PLC"
+        },
+        "features": {
+          "source": [
+            "0392afd3-2d6f-42ad-8c06-1a6652153bc8"
+          ]
+        }
+      },
+      {
+        "id": "66ffab42-868c-4c84-bbda-92321ca33f56",
+        "name": "task02",
+        "task_type": {
+          "category": "Input",
+          "Input": "Trigger image acquisition"
+        },
+        "origin": [
+          "769a8ebf-9b9b-4889-953a-eb7399eb8e32"
+        ],
+        "features": {
+          "target": [
+            "4ce70667-090c-4356-8d7e-5fd91b1926eb"
+          ],
+          "trigger": [
+            "41b1d715-9312-414b-a456-e8544ad84b35"
+          ]
+        }
+      },
+      {
+        "id": "9432d272-97f9-4c92-ae5b-e6346d546073",
+        "name": "task03",
+        "task_type": {
+          "category": "Input",
+          "Input": "Publish the data to databus"
+        },
+        "origin": [
+          "769a8ebf-9b9b-4889-953a-eb7399eb8e32"
+        ]
+      },
+      {
+        "id": "1dc9829b-bf63-4d63-a70a-5281f755bec8",
+        "name": "task04",
+        "task_type": {
+          "category": "Process",
+          "Process": "Process data for object detection"
+        },
+        "origin": [
+          "769a8ebf-9b9b-4889-953a-eb7399eb8e32"
+        ]
+      },
+      {
+        "id": "f4a0d7dd-d344-4a81-9528-479bf3444d1f",
+        "name": "task05",
+        "task_type": {
+          "category": "Process",
+          "Process": "Visualize data trend"
+        },
+        "origin": [
+          "66ffab42-868c-4c84-bbda-92321ca33f56"
+        ]
+      },
+      {
+        "id": "f8ccba42-d8fe-4a5e-9365-8d129f8635dd",
+        "name": "task07",
+        "task_type": {
+          "category": "Output",
+          "Output": "Write data to file"
+        },
+        "origin": [
+          "1dc9829b-bf63-4d63-a70a-5281f755bec8"
+        ]
+      },
+      {
+        "id": "3c401953-75bb-4c4f-9893-93a04b0a32d4",
+        "name": "task08",
+        "task_type": {
+          "category": "Output",
+          "Output": "Upload data to cloud"
+        },
+        "origin": [
+          "f4a0d7dd-d344-4a81-9528-479bf3444d1f"
+        ],
+        "features": {
+          "target": [
+            "0a39316c-a185-47c8-b104-ba189bdcabb0"
+          ]
+        }
+      }
+    ]
+  }
+}
